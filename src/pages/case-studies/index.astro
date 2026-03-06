@@ -1,0 +1,87 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import CaseStudyCard from '../../components/CaseStudyCard.astro';
+import { getCollection } from 'astro:content';
+
+const caseStudies = await getCollection('case-studies');
+const sortedCaseStudies = [...caseStudies].sort((a, b) =>
+  a.data.title.localeCompare(b.data.title)
+);
+
+const impactCategories = ['Strategy', 'Team Enablement', 'Execution'];
+---
+
+<PageLayout
+  title="Case Studies | Design Leader"
+  description="Design leadership case studies. Strategic impact, team enablement, and quantified outcomes from 20 years of UX work."
+>
+  <div class="mx-auto max-w-6xl px-6 py-16">
+    <header>
+      <h1 class="font-display text-display-lg font-bold text-[rgb(var(--color-text))]">
+        Case Studies
+      </h1>
+      <p class="mt-4 max-w-2xl text-lg text-[rgb(var(--color-text-muted))]">
+        Selected projects showing how I translate vision into impact through strategic direction,
+        hands-on execution, and team enablement.
+      </p>
+    </header>
+
+    <div class="mt-10 flex flex-wrap gap-2" id="case-study-filters">
+      <button
+        type="button"
+        class="case-study-filter rounded-full border border-[rgb(var(--color-border))] bg-[rgb(var(--color-bg-elevated))] px-4 py-2 text-sm font-medium transition-colors hover:border-[rgb(var(--color-accent))]/50 hover:text-[rgb(var(--color-accent))] data-[active]:border-[rgb(var(--color-accent))] data-[active]:bg-[rgb(var(--color-accent))]/10 data-[active]:text-[rgb(var(--color-accent))]"
+        data-filter="all"
+        data-active
+      >
+        All
+      </button>
+      {impactCategories.map((cat) => (
+        <button
+          type="button"
+          class="case-study-filter rounded-full border border-[rgb(var(--color-border))] bg-[rgb(var(--color-bg-elevated))] px-4 py-2 text-sm font-medium transition-colors hover:border-[rgb(var(--color-accent))]/50 hover:text-[rgb(var(--color-accent))] data-[active]:border-[rgb(var(--color-accent))] data-[active]:bg-[rgb(var(--color-accent))]/10 data-[active]:text-[rgb(var(--color-accent))]"
+          data-filter={cat}
+        >
+          {cat}
+        </button>
+      ))}
+    </div>
+
+    <div class="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3" id="case-study-grid">
+      {sortedCaseStudies.map((study) => (
+        <div
+          class="case-study-card"
+          data-categories={JSON.stringify(study.data.impactCategories || [])}
+        >
+          <CaseStudyCard
+            slug={study.slug}
+            title={study.data.title}
+            company={study.data.company}
+            outcome={study.data.outcome}
+            role={study.data.role}
+            problem={study.data.problem}
+            impactCategories={study.data.impactCategories}
+            featured={study.data.featured}
+          />
+        </div>
+      ))}
+    </div>
+  </div>
+</PageLayout>
+
+<script>
+  const filters = document.querySelectorAll('.case-study-filter');
+  const cards = document.querySelectorAll('.case-study-card');
+
+  filters.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const filter = btn.getAttribute('data-filter');
+      filters.forEach((f) => f.removeAttribute('data-active'));
+      btn.setAttribute('data-active', '');
+      cards.forEach((card) => {
+        const categories = JSON.parse(card.getAttribute('data-categories') || '[]');
+        const show = filter === 'all' || categories.includes(filter);
+        (card as HTMLElement).style.display = show ? '' : 'none';
+      });
+    });
+  });
+</script>

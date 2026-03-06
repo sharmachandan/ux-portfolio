@@ -1,0 +1,203 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import CaseStudyCard from '../components/CaseStudyCard.astro';
+import LeadershipPrincipleCard from '../components/LeadershipPrincipleCard.astro';
+import { getCollection } from 'astro:content';
+import { leadershipPrinciples } from '../data/leadership-principles';
+import { awards } from '../data/awards';
+
+const caseStudies = await getCollection('case-studies');
+const featuredCaseStudies = caseStudies
+  .filter((c) => c.data.featured)
+  .sort((a, b) => (a.data.title > b.data.title ? 1 : -1));
+const otherCaseStudies = caseStudies.filter((c) => !c.data.featured);
+
+const blogPosts = await getCollection('blog');
+const recentBlogPosts = blogPosts
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 3);
+---
+
+<PageLayout title="Design Leader | UX Portfolio" description="Design Leader at a Fortune 1 retailer. 20 years of UX leadership, strategic design, and international award-winning work.">
+  <div class="mx-auto max-w-6xl px-6 py-16 md:py-24">
+    <!-- Hero -->
+    <section class="animate-fade-in">
+      <h1 class="font-display text-hero font-bold text-[rgb(var(--color-text))]">
+        Design Leader
+      </h1>
+      <p class="mt-4 text-xl font-medium text-[rgb(var(--color-accent))]">
+        Fortune 1 Retailer
+      </p>
+      <p class="mt-6 max-w-2xl text-lg leading-relaxed text-[rgb(var(--color-text-muted))]">
+        20 years of UX leadership. Strategic design that drives business outcomes.
+        Multiple international design awards. Building teams and systems that ship with impact.
+      </p>
+      <div class="mt-10 flex gap-4">
+        <a
+          href="/case-studies/"
+          class="rounded-lg bg-[rgb(var(--color-accent))] px-6 py-3 text-sm font-medium text-white transition-opacity hover:opacity-90"
+        >
+          View Case Studies
+        </a>
+        <a
+          href="/about/"
+          class="rounded-lg border border-[rgb(var(--color-border))] px-6 py-3 text-sm font-medium text-[rgb(var(--color-text))] transition-colors hover:border-[rgb(var(--color-accent))]/50 hover:text-[rgb(var(--color-accent))]"
+        >
+          About Me
+        </a>
+      </div>
+    </section>
+
+    <!-- Featured Case Studies -->
+    <section class="mt-24">
+      <h2 class="font-display text-display font-bold text-[rgb(var(--color-text))]">
+        Featured Work
+      </h2>
+      <p class="mt-2 text-[rgb(var(--color-text-muted))]">
+        Selected case studies demonstrating strategic impact and leadership.
+      </p>
+      <div class="mt-8 grid gap-8 md:grid-cols-2">
+        {featuredCaseStudies.map((study) => (
+          <CaseStudyCard
+            slug={study.slug}
+            title={study.data.title}
+            company={study.data.company}
+            outcome={study.data.outcome}
+            role={study.data.role}
+            problem={study.data.problem}
+            impactCategories={study.data.impactCategories}
+            featured={true}
+          />
+        ))}
+      </div>
+      {otherCaseStudies.length > 0 && (
+        <div class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {otherCaseStudies.slice(0, 3).map((study) => (
+            <CaseStudyCard
+              slug={study.slug}
+              title={study.data.title}
+              company={study.data.company}
+              outcome={study.data.outcome}
+              role={study.data.role}
+              problem={study.data.problem}
+              impactCategories={study.data.impactCategories}
+            />
+          ))}
+        </div>
+      )}
+      <div class="mt-10 text-center">
+        <a
+          href="/case-studies/"
+          class="text-sm font-medium text-[rgb(var(--color-accent))] hover:underline"
+        >
+          View all case studies →
+        </a>
+      </div>
+    </section>
+
+    <!-- Awards Teaser -->
+    <section class="mt-24 rounded-2xl border border-[rgb(var(--color-border))] bg-[rgb(var(--color-bg-elevated))] p-8 md:p-12">
+      <h2 class="font-display text-display font-bold text-[rgb(var(--color-text))]">
+        International Design Awards
+      </h2>
+      <p class="mt-2 text-[rgb(var(--color-text-muted))]">
+        Recognized by Awwwards, FWA, Red Dot, Webby, and IDEA for design excellence.
+      </p>
+      <a
+        href="/awards/"
+        class="mt-6 inline-block text-sm font-medium text-[rgb(var(--color-accent))] hover:underline"
+      >
+        View all awards →
+      </a>
+    </section>
+
+    <!-- Leadership Principles Preview -->
+    <section class="mt-24">
+      <h2 class="font-display text-display font-bold text-[rgb(var(--color-text))]">
+        Leadership Principles
+      </h2>
+      <p class="mt-2 text-[rgb(var(--color-text-muted))]">
+        The beliefs that guide how I lead design teams and shape product strategy.
+      </p>
+      <div class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {leadershipPrinciples.slice(0, 3).map((principle) => (
+          <LeadershipPrincipleCard
+            title={principle.title}
+            description={principle.description}
+            example={principle.example}
+          />
+        ))}
+      </div>
+      <div class="mt-10 text-center">
+        <a
+          href="/leadership/"
+          class="text-sm font-medium text-[rgb(var(--color-accent))] hover:underline"
+        >
+          View all principles →
+        </a>
+      </div>
+    </section>
+
+    <!-- Recent Blog Posts -->
+    <section class="mt-24">
+      <h2 class="font-display text-display font-bold text-[rgb(var(--color-text))]">
+        Blog
+      </h2>
+      <p class="mt-2 text-[rgb(var(--color-text-muted))]">
+        Thoughts on design leadership, strategy, and shipping with impact.
+      </p>
+      {recentBlogPosts.length > 0 ? (
+        <div class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {recentBlogPosts.map((post) => (
+            <a
+              href={`/blog/${post.slug}/`}
+              class="block rounded-xl border border-[rgb(var(--color-border))] bg-[rgb(var(--color-bg-elevated))] p-6 transition-all duration-[var(--transition-base)] hover:border-[rgb(var(--color-accent))]/40 hover:shadow-glow"
+            >
+              <p class="text-sm text-[rgb(var(--color-text-muted))]">
+                {post.data.date.toLocaleDateString('en-US', {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric',
+                })}
+              </p>
+              <h3 class="mt-2 text-lg font-semibold text-[rgb(var(--color-text))]">
+                {post.data.title}
+              </h3>
+              <p class="mt-2 line-clamp-2 text-sm text-[rgb(var(--color-text-muted))]">
+                {post.data.excerpt}
+              </p>
+              <p class="mt-3 text-sm font-medium text-[rgb(var(--color-accent))]">
+                Read more →
+              </p>
+            </a>
+          ))}
+        </div>
+      ) : (
+        <div class="mt-8 rounded-xl border border-dashed border-[rgb(var(--color-border))] bg-[rgb(var(--color-bg-elevated))]/50 p-12 text-center">
+          <p class="text-[rgb(var(--color-text-muted))]">
+            Blog posts coming soon. Check back for thoughts on design leadership and strategy.
+          </p>
+          <a href="/blog/" class="mt-4 inline-block text-sm font-medium text-[rgb(var(--color-accent))] hover:underline">
+            View blog →
+          </a>
+        </div>
+      )}
+    </section>
+
+    <!-- Contact CTA -->
+    <section class="mt-24 rounded-2xl border border-[rgb(var(--color-border))] bg-[rgb(var(--color-bg-elevated))] p-8 md:p-12 text-center">
+      <h2 class="font-display text-display font-bold text-[rgb(var(--color-text))]">
+        Let's Connect
+      </h2>
+      <p class="mt-2 max-w-xl mx-auto text-[rgb(var(--color-text-muted))]">
+        Open to speaking, advisory, and consulting opportunities. Reach out to discuss design leadership, team building, or how we can collaborate.
+      </p>
+      <a
+        href="mailto:hello@example.com"
+        class="mt-6 inline-block rounded-lg bg-[rgb(var(--color-accent))] px-6 py-3 text-sm font-medium text-white transition-opacity hover:opacity-90"
+      >
+        Get in Touch
+      </a>
+    </section>
+  </div>
+</PageLayout>

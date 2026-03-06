@@ -1,0 +1,30 @@
+---
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="mt-auto border-t border-[rgb(var(--color-border))] bg-[rgb(var(--color-bg-elevated))]">
+  <div class="mx-auto max-w-6xl px-6 py-12">
+    <div class="flex flex-col items-center justify-between gap-6 md:flex-row">
+      <p class="text-sm text-[rgb(var(--color-text-muted))]">
+        © {currentYear} Design Leader. All rights reserved.
+      </p>
+      <div class="flex gap-8">
+        <a href="/case-studies/" class="text-sm font-medium text-[rgb(var(--color-text-muted))] transition-colors hover:text-[rgb(var(--color-accent))]">
+          Case Studies
+        </a>
+        <a href="/about/" class="text-sm font-medium text-[rgb(var(--color-text-muted))] transition-colors hover:text-[rgb(var(--color-accent))]">
+          About
+        </a>
+        <a href="/leadership/" class="text-sm font-medium text-[rgb(var(--color-text-muted))] transition-colors hover:text-[rgb(var(--color-accent))]">
+          Leadership
+        </a>
+        <a href="/awards/" class="text-sm font-medium text-[rgb(var(--color-text-muted))] transition-colors hover:text-[rgb(var(--color-accent))]">
+          Awards
+        </a>
+        <a href="/blog/" class="text-sm font-medium text-[rgb(var(--color-text-muted))] transition-colors hover:text-[rgb(var(--color-accent))]">
+          Blog
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>

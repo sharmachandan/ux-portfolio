@@ -1,0 +1,37 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import AwardCard from '../components/AwardCard.astro';
+import { awards } from '../data/awards';
+
+const sortedAwards = [...awards].sort((a, b) => b.year - a.year);
+---
+
+<PageLayout
+  title="Awards | Design Leader"
+  description="International design awards: Awwwards, FWA, Red Dot, Webby, and IDEA recognition."
+>
+  <div class="mx-auto max-w-6xl px-6 py-16">
+    <header>
+      <h1 class="font-display text-display-lg font-bold text-[rgb(var(--color-text))]">
+        Awards & Recognition
+      </h1>
+      <p class="mt-4 max-w-2xl text-lg text-[rgb(var(--color-text-muted))]">
+        Recognized internationally for design excellence across e-commerce, mobile, and digital
+        experiences.
+      </p>
+    </header>
+
+    <div class="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+      {sortedAwards.map((award) => (
+        <AwardCard
+          name={award.name}
+          year={award.year}
+          category={award.category}
+          project={award.project}
+          org={award.org}
+          link={award.link}
+        />
+      ))}
+    </div>
+  </div>
+</PageLayout>

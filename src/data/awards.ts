@@ -1,0 +1,42 @@
+export const awards = [
+  {
+    name: "Awwwards Site of the Day",
+    year: 2024,
+    category: "E-commerce Experience",
+    project: "Omnichannel Checkout",
+    org: "Awwwards",
+    link: "https://www.awwwards.com",
+  },
+  {
+    name: "FWA Featured of the Day",
+    year: 2024,
+    category: "Mobile Design",
+    project: "Retail App Redesign",
+    org: "FWA",
+    link: "https://thefwa.com",
+  },
+  {
+    name: "Red Dot Design Award",
+    year: 2023,
+    category: "Communication Design",
+    project: "Design System",
+    org: "Red Dot",
+    link: "https://www.red-dot.org",
+  },
+  {
+    name: "IDEA Award",
+    year: 2023,
+    category: "Digital Design",
+    project: "Customer Discovery Platform",
+    org: "IDSA",
+    link: "https://www.idsa.org",
+  },
+  {
+    name: "Webby Award",
+    year: 2022,
+    category: "Retail",
+    project: "Mobile Shopping Experience",
+    org: "Webby",
+    link: "https://www.webbyawards.com",
+  },
+];

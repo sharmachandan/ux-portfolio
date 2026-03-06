@@ -1,0 +1,52 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const blogPosts = await getCollection('blog');
+  return blogPosts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await post.render();
+
+const wordCount = post.body.split(/\s+/).length;
+const readingTime = Math.ceil(wordCount / 200);
+---
+
+<PageLayout title={`${post.data.title} | Blog`} description={post.data.excerpt}>
+  <article class="mx-auto max-w-3xl px-6 py-16">
+    <header class="mb-12">
+      <p class="text-sm text-[rgb(var(--color-text-muted))]">
+        {post.data.date.toLocaleDateString('en-US', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+        })}
+        {' · '}
+        {readingTime} min read
+      </p>
+      <h1 class="mt-2 font-display text-display-lg font-bold text-[rgb(var(--color-text))]">
+        {post.data.title}
+      </h1>
+      {post.data.tags && post.data.tags.length > 0 && (
+        <div class="mt-4 flex flex-wrap gap-2">
+          {post.data.tags.map((tag) => (
+            <span
+              class="rounded-full bg-[rgb(var(--color-accent))]/10 px-3 py-1 text-sm font-medium text-[rgb(var(--color-accent))]"
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+      )}
+    </header>
+
+    <div class="prose prose-invert prose-lg max-w-none prose-headings:font-display prose-headings:font-semibold prose-headings:text-[rgb(var(--color-text))] prose-p:text-[rgb(var(--color-text-muted))] prose-a:text-[rgb(var(--color-accent))] prose-a:no-underline hover:prose-a:underline prose-strong:text-[rgb(var(--color-text))]">
+      <Content />
+    </div>
+  </article>
+</PageLayout>

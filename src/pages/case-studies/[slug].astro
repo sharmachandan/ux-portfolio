@@ -1,0 +1,68 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const caseStudies = await getCollection('case-studies');
+  return caseStudies.map((study) => ({
+    params: { slug: study.slug },
+    props: { study },
+  }));
+}
+
+const { study } = Astro.props;
+const { Content } = await study.render();
+const allStudies = await getCollection('case-studies');
+const relatedStudies = allStudies
+  .filter((s) => s.slug !== study.slug)
+  .slice(0, 2);
+---
+
+<PageLayout
+  title={`${study.data.title} | Case Study`}
+  description={study.data.problem || study.data.outcome}
+>
+  <article class="mx-auto max-w-3xl px-6 py-16">
+    <header class="mb-12">
+      <p class="text-sm font-medium text-[rgb(var(--color-accent))]">{study.data.company}</p>
+      <h1 class="mt-2 font-display text-display-lg font-bold text-[rgb(var(--color-text))]">
+        {study.data.title}
+      </h1>
+      <p class="mt-4 text-xl font-medium text-[rgb(var(--color-accent))]">{study.data.outcome}</p>
+      <p class="mt-2 text-sm text-[rgb(var(--color-text-muted))]">{study.data.role}</p>
+      {study.data.impactCategories && study.data.impactCategories.length > 0 && (
+        <div class="mt-4 flex flex-wrap gap-2">
+          {study.data.impactCategories.map((cat) => (
+            <span
+              class="rounded-full bg-[rgb(var(--color-accent))]/10 px-3 py-1 text-sm font-medium text-[rgb(var(--color-accent))]"
+            >
+              {cat}
+            </span>
+          ))}
+        </div>
+      )}
+    </header>
+
+    <div class="prose prose-invert prose-lg max-w-none prose-headings:font-display prose-headings:font-semibold prose-headings:text-[rgb(var(--color-text))] prose-p:text-[rgb(var(--color-text-muted))] prose-a:text-[rgb(var(--color-accent))] prose-a:no-underline hover:prose-a:underline prose-strong:text-[rgb(var(--color-text))]">
+      <Content />
+    </div>
+
+    {relatedStudies.length > 0 && (
+      <aside class="mt-16 border-t border-[rgb(var(--color-border))] pt-12">
+        <h2 class="font-display text-display-sm font-semibold text-[rgb(var(--color-text))]">Related Case Studies</h2>
+        <ul class="mt-6 space-y-4">
+          {relatedStudies.map((s) => (
+            <li>
+              <a
+                href={`/case-studies/${s.slug}/`}
+                class="text-[rgb(var(--color-accent))] hover:underline"
+              >
+                {s.data.title}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </aside>
+    )}
+  </article>
+</PageLayout>
