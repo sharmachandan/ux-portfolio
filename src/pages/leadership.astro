@@ -2,25 +2,28 @@
 import PageLayout from '../layouts/PageLayout.astro';
 import LeadershipPrincipleCard from '../components/LeadershipPrincipleCard.astro';
 import { leadershipPrinciples } from '../data/leadership-principles';
+import { getLeadershipPage } from '../lib/sanity-pages';
+
+const leadershipPage = await getLeadershipPage();
+
+const title = leadershipPage?.title ?? 'Leadership Principles';
+const description = leadershipPage?.description ?? 'The beliefs that guide how I lead design teams, shape product strategy, and build systems that enable others to do their best work.';
+const principles = leadershipPage?.principles?.length ? leadershipPage.principles : leadershipPrinciples;
 ---
 
-<PageLayout
-  title="Leadership Principles | Design Leader"
-  description="The beliefs that guide how I lead design teams and shape product strategy."
->
+<PageLayout title={`${title} | Design Leader`} description={description}>
   <div class="mx-auto max-w-6xl px-6 py-16">
     <header>
       <h1 class="font-display text-display-lg font-bold text-[rgb(var(--color-text))]">
-        Leadership Principles
+        {title}
       </h1>
       <p class="mt-4 max-w-2xl text-lg text-[rgb(var(--color-text-muted))]">
-        The beliefs that guide how I lead design teams, shape product strategy, and build systems
-        that enable others to do their best work.
+        {description}
       </p>
     </header>
 
     <div class="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-      {leadershipPrinciples.map((principle) => (
+      {principles.map((principle: { title: string; description: string; example: string }) => (
         <LeadershipPrincipleCard
           title={principle.title}
           description={principle.description}

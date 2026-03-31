@@ -5,7 +5,9 @@ outcome: "+54% design-to-dev velocity, 200+ components"
 role: "Strategy + Direction, 8 designers"
 teamSize: "8 designers, 4 engineers"
 impactCategories: ["Strategy", "Team Enablement"]
-featured: true
+featured: false
+sortOrder: 3
+image: "/images/case-studies/design-system-placeholder.svg"
 problem: "Scaling design quality and consistency across 50+ product teams."
 ---
 

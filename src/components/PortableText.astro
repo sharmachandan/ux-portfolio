@@ -1,0 +1,13 @@
+---
+import { PortableText as PortableTextRenderer } from 'astro-portabletext';
+
+interface Props {
+  value: any[];
+}
+
+const { value } = Astro.props;
+---
+
+{value && value.length > 0 && (
+  <PortableTextRenderer value={value} />
+)}

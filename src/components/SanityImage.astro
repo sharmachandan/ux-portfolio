@@ -1,0 +1,19 @@
+---
+import { urlFor } from '../lib/sanity';
+
+interface Props {
+  asset: { _ref: string } | { _id: string };
+  alt?: string;
+  width?: number;
+  height?: number;
+  class?: string;
+}
+
+const { asset, alt = '', width, height, class: className = '' } = Astro.props;
+
+if (!asset) return null;
+
+const src = urlFor(asset, { width, height });
+---
+
+<img src={src} alt={alt} width={width} height={height} class={className} loading="lazy" />

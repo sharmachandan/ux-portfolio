@@ -1,13 +1,12 @@
 ---
 import PageLayout from '../../layouts/PageLayout.astro';
 import CaseStudyCard from '../../components/CaseStudyCard.astro';
-import { getCollection } from 'astro:content';
+import { getCaseStudySummaries } from '../../lib/case-studies';
 
-const caseStudies = await getCollection('case-studies');
-const sortedCaseStudies = [...caseStudies].sort((a, b) =>
-  a.data.title.localeCompare(b.data.title)
+const caseStudies = await getCaseStudySummaries();
+const sortedCaseStudies = [...caseStudies].sort(
+  (a, b) => (a.sortOrder ?? Number.MAX_SAFE_INTEGER) - (b.sortOrder ?? Number.MAX_SAFE_INTEGER) || a.title.localeCompare(b.title)
 );
-
 const impactCategories = ['Strategy', 'Team Enablement', 'Execution'];
 ---
 
@@ -50,17 +49,18 @@ const impactCategories = ['Strategy', 'Team Enablement', 'Execution'];
       {sortedCaseStudies.map((study) => (
         <div
           class="case-study-card"
-          data-categories={JSON.stringify(study.data.impactCategories || [])}
+          data-categories={JSON.stringify(study.impactCategories || [])}
         >
           <CaseStudyCard
             slug={study.slug}
-            title={study.data.title}
-            company={study.data.company}
-            outcome={study.data.outcome}
-            role={study.data.role}
-            problem={study.data.problem}
-            impactCategories={study.data.impactCategories}
-            featured={study.data.featured}
+            title={study.title}
+            company={study.company}
+            outcome={study.outcome}
+            role={study.role}
+            image={study.image}
+            problem={study.problem}
+            impactCategories={study.impactCategories}
+            featured={study.featured}
           />
         </div>
       ))}

@@ -6,10 +6,25 @@
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro build",
-    "preview": "astro preview"
+    "preview": "astro preview",
+    "studio": "sanity dev",
+    "studio:deploy": "sanity deploy"
   },
   "dependencies": {
-    "astro": "^4.16.0"
+    "@astrojs/react": "^4.4.2",
+    "@sanity/astro": "^3.2.11",
+    "@sanity/client": "^7.16.0",
+    "@sanity/image-url": "^2.0.3",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "astro": "^4.16.0",
+    "astro-portabletext": "^0.13.0",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "react-is": "^19.2.4",
+    "sanity": "^5.13.0",
+    "styled-components": "^6.3.11",
+    "tslib": "^2.8.1"
   },
   "devDependencies": {
     "@astrojs/tailwind": "^5.1.0",

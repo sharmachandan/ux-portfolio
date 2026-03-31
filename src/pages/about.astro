@@ -1,96 +1,106 @@
 ---
 import PageLayout from '../layouts/PageLayout.astro';
+import { PortableText } from 'astro-portabletext';
+import { getAboutPage, imageUrlFor } from '../lib/sanity-pages';
+
+const aboutPage = await getAboutPage();
+
+const title = aboutPage?.title ?? 'About Me';
+const subtitle = aboutPage?.subtitle ?? 'Design Leader at a Fortune 1 Retailer';
+const photo = aboutPage?.photo ? imageUrlFor(aboutPage.photo) : null;
+const bio = aboutPage?.bio ?? null;
+const experience = aboutPage?.experience ?? [
+  { title: 'Design Leader', company: 'Fortune 1 Retailer', period: 'Present', highlight: true },
+  { title: 'Senior Design roles', company: '20 years in UX, product design, and design leadership', period: '', highlight: false },
+];
+const whatIDoTitle = aboutPage?.whatIDoTitle ?? 'What I Do';
+const whatIDo = aboutPage?.whatIDo ?? [
+  { title: 'Design Leadership', description: 'Strategy, vision, and team development' },
+  { title: 'Team Building', description: 'Hiring, mentoring, and org design' },
+  { title: 'Strategic Design', description: 'Aligning design with business outcomes' },
+  { title: 'Cross-Functional Alignment', description: 'Bringing product, engineering, and business together' },
+];
+const contactTitle = aboutPage?.contactTitle ?? 'Get in Touch';
+const contactDescription = aboutPage?.contactDescription ?? 'Open to speaking, advisory, and consulting opportunities. Reach out to discuss design leadership, team building, or how we can collaborate.';
+const contactButtonLabel = aboutPage?.contactButtonLabel ?? 'Contact Me';
+const contactEmail = aboutPage?.contactEmail ?? 'hello@example.com';
+
+const hasBioFromSanity = bio && bio.length > 0;
+const defaultBioParagraphs = [
+  "I'm a design leader with 20 years of experience shaping digital experiences that drive business outcomes. Currently leading design at a Fortune 1 retailer, I focus on strategic direction, team enablement, and cross-functional alignment.",
+  "My work spans product design, design systems, and organizational design. I've led teams through complex transformations—from building design systems that scale across 50+ teams to redesigning checkout flows that improved conversion by double digits.",
+  "I believe design is strategy, not decoration. Every decision should connect to measurable impact. I've been recognized with multiple international design awards and am passionate about sharing learnings through writing and speaking.",
+];
 ---
 
-<PageLayout
-  title="About | Design Leader"
-  description="Design Leader at a Fortune 1 retailer. 20 years of UX experience, strategic design, and award-winning work."
->
+<PageLayout title={`${title} | Design Leader`} description={subtitle}>
   <div class="mx-auto max-w-3xl px-6 py-16">
     <header>
       <h1 class="font-display text-display-lg font-bold text-[rgb(var(--color-text))]">
-        About Me
+        {title}
       </h1>
       <p class="mt-4 text-xl font-medium text-[rgb(var(--color-accent))]">
-        Design Leader at a Fortune 1 Retailer
+        {subtitle}
       </p>
     </header>
 
     <div class="mt-12 space-y-12">
       <section>
-        <div class="aspect-square max-w-xs overflow-hidden rounded-2xl bg-[rgb(var(--color-border))]/30">
-          <!-- Placeholder for professional photo - replace with actual image -->
-          <div class="flex h-full w-full items-center justify-center text-[rgb(var(--color-text-muted))]">
-            <span class="text-6xl">Photo</span>
+        {photo ? (
+          <div class="aspect-square max-w-xs overflow-hidden rounded-2xl border border-[rgb(var(--color-border))]">
+            <img src={photo} alt={title} class="h-full w-full object-cover" width="320" height="320" />
           </div>
-        </div>
-        <div class="mt-8 prose prose-invert prose-lg max-w-none prose-headings:font-display prose-headings:font-semibold prose-headings:text-[rgb(var(--color-text))] prose-p:text-[rgb(var(--color-text-muted))] prose-a:text-[rgb(var(--color-accent))] prose-a:no-underline hover:prose-a:underline">
-          <p>
-            I'm a design leader with 20 years of experience shaping digital experiences that drive
-            business outcomes. Currently leading design at a Fortune 1 retailer, I focus on
-            strategic direction, team enablement, and cross-functional alignment.
-          </p>
-          <p>
-            My work spans product design, design systems, and organizational design. I've led teams
-            through complex transformations—from building design systems that scale across 50+ teams
-            to redesigning checkout flows that improved conversion by double digits.
-          </p>
-          <p>
-            I believe design is strategy, not decoration. Every decision should connect to measurable
-            impact. I've been recognized with multiple international design awards and am passionate
-            about sharing learnings through writing and speaking.
-          </p>
+        ) : (
+          <div class="aspect-square max-w-xs overflow-hidden rounded-2xl bg-[rgb(var(--color-border))]/30">
+            <div class="flex h-full w-full items-center justify-center text-[rgb(var(--color-text-muted))]">
+              <span class="text-6xl">Photo</span>
+            </div>
+          </div>
+        )}
+        <div class="mt-8 prose prose-lg max-w-none prose-headings:font-display prose-headings:font-semibold prose-headings:text-[rgb(var(--color-text))] prose-p:text-[rgb(var(--color-text-muted))] prose-a:text-[rgb(var(--color-accent))] prose-a:no-underline hover:prose-a:underline">
+          {hasBioFromSanity ? (
+            <PortableText value={bio} />
+          ) : (
+            defaultBioParagraphs.map((p) => <p>{p}</p>)
+          )}
         </div>
       </section>
 
       <section>
         <h2 class="font-display text-display font-bold text-[rgb(var(--color-text))]">Experience</h2>
         <ul class="mt-6 space-y-6">
-          <li class="border-l-2 border-[rgb(var(--color-accent))]/50 pl-6">
-            <h3 class="font-semibold text-[rgb(var(--color-text))]">Design Leader</h3>
-            <p class="text-sm text-[rgb(var(--color-accent))]">Fortune 1 Retailer</p>
-            <p class="mt-1 text-sm text-[rgb(var(--color-text-muted))]">Present</p>
-          </li>
-          <li class="border-l-2 border-[rgb(var(--color-border))] pl-6">
-            <h3 class="font-semibold text-[rgb(var(--color-text))]">Senior Design roles</h3>
-            <p class="text-sm text-[rgb(var(--color-text-muted))]">20 years in UX, product design, and design leadership</p>
-          </li>
+          {experience.map((exp: { title: string; company: string; period: string; highlight?: boolean }) => (
+            <li class={`border-l-2 pl-6 ${exp.highlight ? 'border-[rgb(var(--color-accent))]/50' : 'border-[rgb(var(--color-border))]'}`}>
+              <h3 class="font-semibold text-[rgb(var(--color-text))]">{exp.title}</h3>
+              <p class={`text-sm ${exp.highlight ? 'text-[rgb(var(--color-accent))]' : 'text-[rgb(var(--color-text-muted))]'}`}>{exp.company}</p>
+              {exp.period && <p class="mt-1 text-sm text-[rgb(var(--color-text-muted))]">{exp.period}</p>}
+            </li>
+          ))}
         </ul>
       </section>
 
       <section>
-        <h2 class="font-display text-display font-bold text-[rgb(var(--color-text))]">What I Do</h2>
+        <h2 class="font-display text-display font-bold text-[rgb(var(--color-text))]">{whatIDoTitle}</h2>
         <ul class="mt-6 grid gap-4 sm:grid-cols-2">
-          <li class="rounded-xl border border-[rgb(var(--color-border))] bg-[rgb(var(--color-bg-elevated))] p-4">
-            <h3 class="font-semibold text-[rgb(var(--color-text))]">Design Leadership</h3>
-            <p class="mt-1 text-sm text-[rgb(var(--color-text-muted))]">Strategy, vision, and team development</p>
-          </li>
-          <li class="rounded-xl border border-[rgb(var(--color-border))] bg-[rgb(var(--color-bg-elevated))] p-4">
-            <h3 class="font-semibold text-[rgb(var(--color-text))]">Team Building</h3>
-            <p class="mt-1 text-sm text-[rgb(var(--color-text-muted))]">Hiring, mentoring, and org design</p>
-          </li>
-          <li class="rounded-xl border border-[rgb(var(--color-border))] bg-[rgb(var(--color-bg-elevated))] p-4">
-            <h3 class="font-semibold text-[rgb(var(--color-text))]">Strategic Design</h3>
-            <p class="mt-1 text-sm text-[rgb(var(--color-text-muted))]">Aligning design with business outcomes</p>
-          </li>
-          <li class="rounded-xl border border-[rgb(var(--color-border))] bg-[rgb(var(--color-bg-elevated))] p-4">
-            <h3 class="font-semibold text-[rgb(var(--color-text))]">Cross-Functional Alignment</h3>
-            <p class="mt-1 text-sm text-[rgb(var(--color-text-muted))]">Bringing product, engineering, and business together</p>
-          </li>
+          {whatIDo.map((item: { title: string; description: string }) => (
+            <li class="rounded-xl border border-[rgb(var(--color-border))] bg-[rgb(var(--color-bg-elevated))] p-4">
+              <h3 class="font-semibold text-[rgb(var(--color-text))]">{item.title}</h3>
+              <p class="mt-1 text-sm text-[rgb(var(--color-text-muted))]">{item.description}</p>
+            </li>
+          ))}
         </ul>
       </section>
 
       <section class="rounded-2xl border border-[rgb(var(--color-border))] bg-[rgb(var(--color-bg-elevated))] p-8">
-        <h2 class="font-display text-display font-bold text-[rgb(var(--color-text))]">Get in Touch</h2>
+        <h2 class="font-display text-display font-bold text-[rgb(var(--color-text))]">{contactTitle}</h2>
         <p class="mt-4 text-[rgb(var(--color-text-muted))]">
-          Open to speaking, advisory, and consulting opportunities. Reach out to discuss design
-          leadership, team building, or how we can collaborate.
+          {contactDescription}
         </p>
         <a
-          href="mailto:hello@example.com"
+          href={`mailto:${contactEmail}`}
           class="mt-6 inline-block rounded-lg bg-[rgb(var(--color-accent))] px-6 py-3 text-sm font-medium text-white transition-opacity hover:opacity-90"
         >
-          Contact Me
+          {contactButtonLabel}
         </a>
       </section>
     </div>

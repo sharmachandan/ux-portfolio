@@ -1,0 +1,243 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import { resumePage } from '../data/resume';
+
+const {
+  pdfHref,
+  pdfDownloadName,
+  hero,
+  profile,
+  competencies,
+  experience,
+  awards,
+  patents,
+  education,
+  skillsAi,
+  impactStrip,
+} = resumePage;
+
+---
+
+<PageLayout
+  title="Resume | UX Portfolio"
+  description="Chandan Sharma — resume and PDF download."
+>
+  <article class="case-study-editorial resume-page">
+    <section class="case-study-hero">
+      <div class="case-study-hero__inner">
+        <div class="case-study-eyebrow">
+          <span class="case-study-eyebrow__rule"></span>
+          <span set:html={hero.eyebrow}></span>
+        </div>
+
+        <h1 class="case-study-hero__title" set:html={hero.titleHtml}></h1>
+        <p class="case-study-hero__deck">{hero.deck}</p>
+        <p class="resume-hero-contact">{hero.contactLine}</p>
+
+        <a href={pdfHref} download={pdfDownloadName} class="resume-pdf-cta">
+          Download PDF
+        </a>
+
+        <div class="case-study-hero__stats">
+          {hero.stats.map((stat) => (
+            <div class="case-study-hero__stat">
+              <div class="case-study-hero__stat-value">{stat.value}</div>
+              <div class="case-study-hero__stat-label" set:html={stat.labelHtml}></div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <div class="case-study-main">
+      <section class="case-study-section">
+        <div class="case-study-section__tag">{profile.tag}</div>
+        <h2 class="case-study-section__title" set:html={profile.titleHtml}></h2>
+        {profile.paragraphs.map((paragraph) => (
+          <p class="case-study-body">{paragraph}</p>
+        ))}
+      </section>
+
+      <div class="case-study-divider"></div>
+
+      <section class="case-study-section">
+        <div class="case-study-section__tag">{competencies.tag}</div>
+        <h2 class="case-study-section__title" set:html={competencies.titleHtml}></h2>
+
+        <div class="case-study-stat-grid">
+          {competencies.items.map((item) => (
+            <div class:list={['case-study-stat-card', item.dark && 'is-dark']}>
+              <div class:list={['case-study-stat-card__value', item.gold && 'is-gold']}>{item.value}</div>
+              <div class="case-study-stat-card__label">{item.label}</div>
+              <div class="case-study-stat-card__description">{item.description}</div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <div class="case-study-divider"></div>
+
+      <section class="case-study-section">
+        <div class="case-study-section__tag">{experience.tag}</div>
+        <h2 class="case-study-section__title" set:html={experience.titleHtml}></h2>
+
+        {experience.roles.map((role, index) => (
+          <div class:list={['border-t border-[rgb(var(--color-border))] pt-10', index === 0 && 'border-t-0 pt-6']}>
+            <p class="case-study-timeline__phase">{role.meta}</p>
+            <h3 class="case-study-timeline__title">{role.title}</h3>
+            <ul class="mt-5 space-y-4">
+              {role.bullets.map((bullet) => (
+                <li class="resume-list-accent resume-list-accent--gold">
+                  <p class="case-study-body case-study-body--flush">{bullet}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </section>
+
+      <div class="case-study-divider"></div>
+
+      <section class="case-study-section">
+        <div class="case-study-section__tag">{awards.tag}</div>
+        <h2 class="case-study-section__title" set:html={awards.titleHtml}></h2>
+
+        <div class="case-study-recognition-grid">
+          {awards.items.map((item) => (
+            <div class="case-study-recognition-card">
+              <div class="case-study-recognition-card__icon">{item.icon}</div>
+              <div class="case-study-recognition-card__source">{item.source}</div>
+              <div class="case-study-recognition-card__text">{item.text}</div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <div class="case-study-divider"></div>
+
+      <section class="case-study-section">
+        <div class="case-study-section__tag">{patents.tag}</div>
+        <h2 class="case-study-section__title" set:html={patents.titleHtml}></h2>
+        <ul class="mt-6 space-y-4">
+          {patents.items.map((item) => (
+            <li class="resume-list-accent resume-list-accent--border">
+              <p class="case-study-body case-study-body--flush">{item}</p>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <div class="case-study-divider"></div>
+
+      <section class="case-study-section">
+        <div class="case-study-section__tag">{education.tag}</div>
+        <h2 class="case-study-section__title" set:html={education.titleHtml}></h2>
+        <ul class="mt-6 space-y-4">
+          {education.items.map((item) => (
+            <li class="resume-list-accent resume-list-accent--teal">
+              <p class="case-study-body case-study-body--flush">{item}</p>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <div class="case-study-divider"></div>
+
+      <section class="case-study-section">
+        <div class="case-study-section__tag">{skillsAi.tag}</div>
+        <h2 class="case-study-section__title" set:html={skillsAi.titleHtml}></h2>
+        {skillsAi.bullets.map((line) => (
+          <p class="case-study-body">{line}</p>
+        ))}
+      </section>
+
+      <div class="case-study-divider"></div>
+
+      <section class="case-study-section">
+        <div class="case-study-section__tag">PDF</div>
+        <h2 class="case-study-section__title">Download the <em>full</em> resume.</h2>
+        <p class="case-study-body">
+          For recruiters and hiring managers: the downloadable file is the same PDF as my latest resume (March 2026).
+        </p>
+        <a href={pdfHref} download={pdfDownloadName} class="resume-pdf-cta resume-pdf-cta--inline">
+          Download PDF
+        </a>
+      </section>
+    </div>
+
+    <section class="case-study-impact-banner">
+      {impactStrip.map((metric) => (
+        <div class="case-study-impact-banner__item">
+          <div class="case-study-impact-banner__value">{metric.value}</div>
+          <div class="case-study-impact-banner__label" set:html={metric.labelHtml}></div>
+        </div>
+      ))}
+    </section>
+  </article>
+</PageLayout>
+
+<style>
+  /* Case study 2 (Just Go) tokens: navy, gold, teal, mono + display scale from global.css */
+  .resume-page .case-study-hero {
+    padding-bottom: 3.5rem;
+  }
+
+  .resume-page .resume-hero-contact {
+    margin-top: 1.25rem;
+    max-width: 48rem;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    line-height: 1.6;
+    color: rgb(255 255 255 / 0.56);
+  }
+
+  .resume-page .resume-pdf-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2.25rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.62rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    line-height: 1;
+    background: rgb(var(--color-gold));
+    color: rgb(var(--color-navy));
+    transition: opacity var(--transition-fast);
+  }
+
+  .resume-page .resume-pdf-cta:hover {
+    opacity: 0.9;
+  }
+
+  .resume-page .resume-pdf-cta--inline {
+    margin-top: 1.5rem;
+  }
+
+  .resume-page .case-study-body--flush {
+    margin-top: 0;
+  }
+
+  .resume-page .resume-list-accent {
+    border-left-width: 2px;
+    border-left-style: solid;
+    padding-left: 1.25rem;
+  }
+
+  .resume-page .resume-list-accent--gold {
+    border-left-color: rgb(var(--color-gold));
+  }
+
+  .resume-page .resume-list-accent--teal {
+    border-left-color: rgb(var(--color-teal));
+  }
+
+  .resume-page .resume-list-accent--border {
+    border-left-color: rgb(var(--color-border));
+  }
+</style>

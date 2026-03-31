@@ -16,6 +16,7 @@ A portfolio website for a design leader at a Fortune 1 retailer, built with Astr
 - Astro 4
 - Tailwind CSS
 - @tailwindcss/typography
+- Sanity CMS (optional, for blog content)
 - TypeScript
 
 ## Getting Started
@@ -64,6 +65,15 @@ problem: "One-line problem statement"
 ```
 
 ### Blog Posts
+
+**Option A: Sanity CMS** (recommended)
+
+1. Create a project at [sanity.io/manage](https://sanity.io/manage) or run `npx sanity login` then `npx sanity init`
+2. Copy `.env.example` to `.env` and add your `PUBLIC_SANITY_PROJECT_ID` and `PUBLIC_SANITY_DATASET`
+3. Run `npm run studio` to open Sanity Studio locally, or `npm run studio:deploy` to deploy it to `*.sanity.studio`
+4. Add blog posts in the Studio; they appear on the site after the next build
+
+**Option B: Markdown files**
 
 Add `.md` or `.mdx` files to `src/content/blog/`:
 

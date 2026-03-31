@@ -1,12 +1,9 @@
 ---
 import PageLayout from '../../layouts/PageLayout.astro';
 import BlogCard from '../../components/BlogCard.astro';
-import { getCollection } from 'astro:content';
+import { getBlogPosts } from '../../lib/blog';
 
-const blogPosts = await getCollection('blog');
-const sortedPosts = blogPosts.sort(
-  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
-);
+const posts = await getBlogPosts();
 ---
 
 <PageLayout
@@ -23,15 +20,15 @@ const sortedPosts = blogPosts.sort(
       </p>
     </header>
 
-    {sortedPosts.length > 0 ? (
+    {posts.length > 0 ? (
       <div class="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-        {sortedPosts.map((post) => (
+        {posts.map((post) => (
           <BlogCard
             slug={post.slug}
-            title={post.data.title}
-            excerpt={post.data.excerpt}
-            date={post.data.date}
-            coverImage={post.data.coverImage}
+            title={post.title}
+            excerpt={post.excerpt}
+            date={post.date}
+            coverImage={post.coverImage}
           />
         ))}
       </div>
@@ -39,8 +36,7 @@ const sortedPosts = blogPosts.sort(
       <div class="mt-12 rounded-2xl border border-dashed border-[rgb(var(--color-border))] bg-[rgb(var(--color-bg-elevated))]/50 p-16 text-center">
         <h2 class="font-display text-display-sm font-semibold text-[rgb(var(--color-text))]">Coming Soon</h2>
         <p class="mt-4 text-[rgb(var(--color-text-muted))]">
-          Blog posts will be added here. Check back for thoughts on design leadership, team building,
-          strategic design, and lessons from 20 years in the field.
+          Blog posts will be added here. Add content in Sanity Studio or create Markdown files in <code>src/content/blog/</code>.
         </p>
       </div>
     )}

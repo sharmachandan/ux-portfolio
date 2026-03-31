@@ -1,27 +1,80 @@
 ---
 import PageLayout from '../../layouts/PageLayout.astro';
+import { PortableText } from 'astro-portabletext';
 import { getCollection } from 'astro:content';
+import { getSanityPostSlugs, fetchSanityPostBySlug } from '../../lib/blog';
 
 export async function getStaticPaths() {
-  const blogPosts = await getCollection('blog');
-  return blogPosts.map((post) => ({
-    params: { slug: post.slug },
-    props: { post },
-  }));
+  const projectId = import.meta.env.PUBLIC_SANITY_PROJECT_ID;
+  const dataset = import.meta.env.PUBLIC_SANITY_DATASET ?? 'production';
+  const hasSanity = projectId && projectId !== 'placeholder';
+  const paths: { params: { slug: string }; props: { source: 'sanity' | 'content' } }[] = [];
+
+  if (hasSanity) {
+    try {
+      const slugs = await getSanityPostSlugs(projectId, dataset);
+      for (const s of slugs) {
+        paths.push({ params: { slug: s }, props: { source: 'sanity' } });
+      }
+    } catch (_e) {
+      // Fall through
+    }
+  }
+
+  if (paths.length === 0) {
+    const blogPosts = await getCollection('blog');
+    for (const post of blogPosts) {
+      paths.push({ params: { slug: post.slug }, props: { source: 'content' } });
+    }
+  }
+
+  return paths;
 }
 
-const { post } = Astro.props;
-const { Content } = await post.render();
+const { slug } = Astro.params;
+const { source } = Astro.props;
 
-const wordCount = post.body.split(/\s+/).length;
-const readingTime = Math.ceil(wordCount / 200);
+let title = '';
+let excerpt = '';
+let dateStr = '';
+let body: any[] | null = null;
+let tags: string[] = [];
+let ContentComponent: any = null;
+
+if (source === 'sanity') {
+  const projectId = import.meta.env.PUBLIC_SANITY_PROJECT_ID;
+  const dataset = import.meta.env.PUBLIC_SANITY_DATASET ?? 'production';
+  const post = await fetchSanityPostBySlug(projectId, dataset, slug!);
+  if (post) {
+    title = post.title;
+    excerpt = post.excerpt;
+    dateStr = post.publishedAt;
+    body = post.body;
+    tags = post.tags ?? [];
+  }
+} else {
+  const blogPosts = await getCollection('blog');
+  const post = blogPosts.find((p) => p.slug === slug);
+  if (post) {
+    title = post.data.title;
+    excerpt = post.data.excerpt;
+    dateStr = post.data.date.toISOString();
+    tags = post.data.tags ?? [];
+    const rendered = await post.render();
+    ContentComponent = rendered.Content;
+  }
+}
+
+const dateObj = new Date(dateStr);
+const wordCount = body ? JSON.stringify(body).split(/\s+/).length : 0;
+const readingTime = body ? Math.max(1, Math.ceil(wordCount / 200)) : 3;
 ---
 
-<PageLayout title={`${post.data.title} | Blog`} description={post.data.excerpt}>
+<PageLayout title={`${title} | Blog`} description={excerpt}>
   <article class="mx-auto max-w-3xl px-6 py-16">
     <header class="mb-12">
       <p class="text-sm text-[rgb(var(--color-text-muted))]">
-        {post.data.date.toLocaleDateString('en-US', {
+        {dateObj.toLocaleDateString('en-US', {
           year: 'numeric',
           month: 'long',
           day: 'numeric',
@@ -30,11 +83,11 @@ const readingTime = Math.ceil(wordCount / 200);
         {readingTime} min read
       </p>
       <h1 class="mt-2 font-display text-display-lg font-bold text-[rgb(var(--color-text))]">
-        {post.data.title}
+        {title}
       </h1>
-      {post.data.tags && post.data.tags.length > 0 && (
+      {tags.length > 0 && (
         <div class="mt-4 flex flex-wrap gap-2">
-          {post.data.tags.map((tag) => (
+          {tags.map((tag: string) => (
             <span
               class="rounded-full bg-[rgb(var(--color-accent))]/10 px-3 py-1 text-sm font-medium text-[rgb(var(--color-accent))]"
             >
@@ -45,8 +98,14 @@ const readingTime = Math.ceil(wordCount / 200);
       )}
     </header>
 
-    <div class="prose prose-invert prose-lg max-w-none prose-headings:font-display prose-headings:font-semibold prose-headings:text-[rgb(var(--color-text))] prose-p:text-[rgb(var(--color-text-muted))] prose-a:text-[rgb(var(--color-accent))] prose-a:no-underline hover:prose-a:underline prose-strong:text-[rgb(var(--color-text))]">
-      <Content />
+    <div class="prose prose-lg max-w-none prose-headings:font-display prose-headings:font-semibold prose-headings:text-[rgb(var(--color-text))] prose-p:text-[rgb(var(--color-text-muted))] prose-a:text-[rgb(var(--color-accent))] prose-a:no-underline hover:prose-a:underline prose-strong:text-[rgb(var(--color-text))]">
+      {source === 'sanity' && body && body.length > 0 ? (
+        <PortableText value={body} />
+      ) : ContentComponent ? (
+        <ContentComponent />
+      ) : (
+        <p>Post not found.</p>
+      )}
     </div>
   </article>
 </PageLayout>

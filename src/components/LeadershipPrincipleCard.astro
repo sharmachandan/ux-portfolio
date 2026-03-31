@@ -8,11 +8,11 @@ interface Props {
 const { title, description, example } = Astro.props;
 ---
 
-<div class="rounded-xl border border-[rgb(var(--color-border))] bg-[rgb(var(--color-bg-elevated))] p-6 transition-all duration-[var(--transition-base)] hover:border-[rgb(var(--color-accent))]/40 hover:shadow-glow">
+<div class="border border-[rgb(var(--color-border))] bg-[rgb(var(--color-bg-elevated))] p-6 transition-all duration-[var(--transition-base)] hover:-translate-y-1 hover:border-[rgb(var(--color-accent-muted))]/30 hover:shadow-md">
   <h3 class="font-display text-display-sm font-semibold text-[rgb(var(--color-text))]">{title}</h3>
   <p class="mt-2 text-[rgb(var(--color-text-muted))] leading-relaxed">{description}</p>
   {example && (
-    <blockquote class="mt-4 border-l-2 border-[rgb(var(--color-accent))]/50 pl-4 italic text-[rgb(var(--color-text-muted))]">
+    <blockquote class="mt-5 border-l-2 border-[rgb(var(--color-accent-soft))]/80 pl-4 italic text-[rgb(var(--color-text-muted))]">
       {example}
     </blockquote>
   )}

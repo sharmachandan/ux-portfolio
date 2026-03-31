@@ -2,27 +2,32 @@
 import PageLayout from '../layouts/PageLayout.astro';
 import AwardCard from '../components/AwardCard.astro';
 import { awards } from '../data/awards';
+import { getAwardsPage } from '../lib/sanity-pages';
 
-const sortedAwards = [...awards].sort((a, b) => b.year - a.year);
+const awardsPage = await getAwardsPage();
+
+const title = awardsPage?.title ?? 'Awards & Recognition';
+const description = awardsPage?.description ?? 'Recognized internationally for design excellence across e-commerce, mobile, and digital experiences.';
+const awardsList = awardsPage?.awards?.length
+  ? awardsPage.awards
+  : awards;
+
+const sortedAwards = [...awardsList].sort((a: { year: number }, b: { year: number }) => b.year - a.year);
 ---
 
-<PageLayout
-  title="Awards | Design Leader"
-  description="International design awards: Awwwards, FWA, Red Dot, Webby, and IDEA recognition."
->
+<PageLayout title={`${title} | Design Leader`} description={description}>
   <div class="mx-auto max-w-6xl px-6 py-16">
     <header>
       <h1 class="font-display text-display-lg font-bold text-[rgb(var(--color-text))]">
-        Awards & Recognition
+        {title}
       </h1>
       <p class="mt-4 max-w-2xl text-lg text-[rgb(var(--color-text-muted))]">
-        Recognized internationally for design excellence across e-commerce, mobile, and digital
-        experiences.
+        {description}
       </p>
     </header>
 
     <div class="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-      {sortedAwards.map((award) => (
+      {sortedAwards.map((award: { name: string; year: number; category: string; project: string; org: string; link?: string }) => (
         <AwardCard
           name={award.name}
           year={award.year}

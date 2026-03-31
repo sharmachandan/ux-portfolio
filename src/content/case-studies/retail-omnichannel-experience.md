@@ -5,7 +5,9 @@ outcome: "-34% cart abandonment, +28% mobile conversion"
 role: "Player + Coach, 6 designers"
 teamSize: "6 designers, 2 researchers"
 impactCategories: ["Strategy", "Team Enablement", "Execution"]
-featured: true
+featured: false
+sortOrder: 5
+image: "/images/case-studies/omnichannel-placeholder.svg"
 problem: "Unified seamless checkout across web, app, and in-store."
 ---
 

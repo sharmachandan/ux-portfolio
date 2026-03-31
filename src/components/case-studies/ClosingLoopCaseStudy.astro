@@ -1,0 +1,184 @@
+---
+import { closingLoopCaseStudy } from '../../data/case-studies/closing-the-loop';
+
+const { hero, sections } = closingLoopCaseStudy;
+---
+
+<article class="iterative-case-study">
+  <section class="iterative-hero">
+    <div class="iterative-hero__left">
+      <div class="iterative-eyebrow">{hero.eyebrow}</div>
+      <h1 class="iterative-hero__title" set:html={hero.titleHtml}></h1>
+      <p class="iterative-hero__deck">{hero.deck}</p>
+
+      <div class="iterative-kpi-grid">
+        {hero.kpis.map((kpi) => (
+          <div class="iterative-kpi-card">
+            <div class="iterative-kpi-card__label">{kpi.label}</div>
+            <div class="iterative-kpi-card__before">{kpi.before}</div>
+            <div class="iterative-kpi-card__after">{kpi.after}</div>
+            <div class="iterative-kpi-card__delta">{kpi.delta}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <div class="iterative-hero__right">
+      <img src={hero.image} alt={closingLoopCaseStudy.title} width="1200" height="1400" />
+      <div class="iterative-hero__overlay" aria-hidden="true"></div>
+    </div>
+  </section>
+
+  <div class="iterative-main">
+    <section class="case-study-section">
+      <div class="case-study-section__tag">{sections.coreTension.tag}</div>
+      <h2 class="case-study-section__title" set:html={sections.coreTension.titleHtml}></h2>
+      <p class="case-study-body">{sections.coreTension.body}</p>
+
+      <div class="iterative-tension-grid">
+        <div class="iterative-tension-card">
+          <div class="iterative-tension-card__tag">{sections.coreTension.pressure.tag}</div>
+          <h3 class="iterative-tension-card__title">{sections.coreTension.pressure.title}</h3>
+          <p class="iterative-tension-card__body">{sections.coreTension.pressure.body}</p>
+        </div>
+        <div class="iterative-tension-card is-dark">
+          <div class="iterative-tension-card__tag">{sections.coreTension.bet.tag}</div>
+          <h3 class="iterative-tension-card__title">{sections.coreTension.bet.title}</h3>
+          <p class="iterative-tension-card__body">{sections.coreTension.bet.body}</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="case-study-divider"></div>
+
+    <section class="case-study-section">
+      <div class="case-study-section__tag">{sections.iterationWork.tag}</div>
+      <h2 class="case-study-section__title" set:html={sections.iterationWork.titleHtml}></h2>
+      <p class="case-study-body">{sections.iterationWork.body}</p>
+
+      <div class="iterative-table-wrap">
+        <table class="iterative-table">
+          <thead>
+            <tr>
+              <th>Design Area</th>
+              <th>What We Observed Post-Launch</th>
+              <th>What We Changed</th>
+              <th>Outcome</th>
+            </tr>
+          </thead>
+          <tbody>
+            {sections.iterationWork.rows.map((row) => (
+              <tr>
+                <td><span class="iterative-area-tag">{row.area}</span></td>
+                <td>{row.observed}</td>
+                <td>{row.changed}</td>
+                <td><span class="iterative-impact-tag">{row.outcome}</span></td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+
+  <section class="iterative-progress-section">
+    <div class="iterative-main">
+      <div class="iterative-progress-eyebrow">{sections.progress.eyebrow}</div>
+      <h2 class="iterative-progress-title" set:html={sections.progress.titleHtml}></h2>
+
+      <div class="iterative-progress-grid">
+        {sections.progress.metrics.map((metric) => (
+          <div class="iterative-progress-item">
+            <div class="iterative-progress-item__top">
+              <span class="iterative-progress-item__label">{metric.label}</span>
+              <span class="iterative-progress-item__values">{metric.values}</span>
+            </div>
+            <div class="iterative-progress-track">
+              <div class="iterative-progress-track__before" style={`width:${metric.beforeWidth}`}></div>
+              <div class="iterative-progress-track__after" style={`width:${metric.afterWidth}`}></div>
+            </div>
+            <div class="iterative-progress-item__sublabel">{metric.sublabel}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <div class="iterative-main">
+    <section class="case-study-section">
+      <div class="case-study-section__tag">{sections.outcomePicture.tag}</div>
+      <h2 class="case-study-section__title" set:html={sections.outcomePicture.titleHtml}></h2>
+
+      <div class="iterative-outcomes">
+        {sections.outcomePicture.rows.map((row) => (
+          <div class="iterative-outcome-row">
+            <div class="iterative-outcome-row__before">
+              <div class="iterative-outcome-row__value is-before">{row.before.value}</div>
+              <div class="iterative-outcome-row__label">{row.before.label}</div>
+            </div>
+            <div class="iterative-outcome-row__content">
+              <h3 class="iterative-outcome-row__title">{row.title}</h3>
+              <p class="iterative-outcome-row__description">{row.description}</p>
+            </div>
+            <div class="iterative-outcome-row__after">
+              <div class="iterative-outcome-row__value is-after">{row.after.value}</div>
+              <div class="iterative-outcome-row__label">{row.after.label}</div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  </div>
+
+  <section class="iterative-image-spread">
+    <img src={sections.imageSpread.image} alt="Just Go iterative physical design evolution" width="1600" height="800" />
+    <div class="iterative-image-spread__overlay" aria-hidden="true"></div>
+    <div class="iterative-image-spread__caption">
+      <div class="iterative-image-spread__tag">{sections.imageSpread.tag}</div>
+      <h3 class="iterative-image-spread__title" set:html={sections.imageSpread.titleHtml}></h3>
+      <p class="iterative-image-spread__body">{sections.imageSpread.body}</p>
+    </div>
+  </section>
+
+  <div class="iterative-main">
+    <section class="case-study-section">
+      <div class="case-study-section__tag">{sections.context.tag}</div>
+      <h2 class="case-study-section__title" set:html={sections.context.titleHtml}></h2>
+
+      <div class="iterative-context-box">
+        <div class="iterative-context-box__body" set:html={sections.context.bodyHtml}></div>
+      </div>
+
+      <figure class="case-study-quote">
+        <blockquote>{sections.context.quote.body}</blockquote>
+        <figcaption>{sections.context.quote.cite}</figcaption>
+      </figure>
+    </section>
+  </div>
+
+  <section class="iterative-impact-strip">
+    {sections.context.impactMetrics.map((metric) => (
+      <div class="iterative-impact-strip__item">
+        <div class="iterative-impact-strip__value">{metric.value}</div>
+        <div class="iterative-impact-strip__label" set:html={metric.labelHtml}></div>
+      </div>
+    ))}
+  </section>
+
+  <div class="iterative-main">
+    <section class="case-study-section">
+      <div class="case-study-section__tag">{sections.learnings.tag}</div>
+      <h2 class="case-study-section__title" set:html={sections.learnings.titleHtml}></h2>
+
+      <div class="case-study-takeaways-grid">
+        {sections.learnings.items.map((item) => (
+          <div class="case-study-takeaway">
+            <div class="case-study-takeaway__number">{item.number}</div>
+            <h3 class="case-study-takeaway__title">{item.title}</h3>
+            <p class="case-study-takeaway__body">{item.body}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+  </div>
+</article>

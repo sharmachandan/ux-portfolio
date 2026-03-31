@@ -2,6 +2,7 @@
 import BaseLayout from './BaseLayout.astro';
 import Header from '../components/layout/Header.astro';
 import Footer from '../components/layout/Footer.astro';
+import { getSiteSettings, imageUrlFor } from '../lib/sanity-pages';
 
 interface Props {
   title: string;
@@ -9,10 +10,14 @@ interface Props {
 }
 
 const { title, description } = Astro.props;
+
+const siteSettings = await getSiteSettings();
+const logoUrl = siteSettings?.logo ? imageUrlFor(siteSettings.logo) : null;
+const faviconUrl = siteSettings?.favicon ? imageUrlFor(siteSettings.favicon) : null;
 ---
 
-<BaseLayout title={title} description={description}>
-  <Header />
+<BaseLayout title={title} description={description} faviconUrl={faviconUrl}>
+  <Header logoUrl={logoUrl} />
   <main class="flex-1">
     <slot />
   </main>

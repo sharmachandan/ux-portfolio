@@ -1,8 +1,14 @@
 ---
+interface Props {
+  logoUrl?: string | null;
+}
+
+const { logoUrl } = Astro.props;
 const currentPath = Astro.url.pathname;
 const navLinks = [
   { href: '/', label: 'Home' },
   { href: '/case-studies/', label: 'Case Studies' },
+  { href: '/resume/', label: 'Resume' },
   { href: '/about/', label: 'About' },
   { href: '/leadership/', label: 'Leadership' },
   { href: '/awards/', label: 'Awards' },
@@ -10,10 +16,14 @@ const navLinks = [
 ];
 ---
 
-<header class="sticky top-0 z-50 border-b border-[rgb(var(--color-border))] bg-[rgb(var(--color-bg))/80] backdrop-blur-md">
-  <nav class="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-    <a href="/" class="text-lg font-semibold tracking-tight transition-opacity hover:opacity-80">
-      Portfolio
+<header class="sticky top-0 z-50 border-b border-[rgb(var(--color-border))] glass-header">
+  <nav class="mx-auto flex h-24 max-w-6xl items-center justify-between gap-6 px-6">
+    <a href="/" class="flex h-full items-center transition-opacity hover:opacity-80" aria-label="Home">
+      {logoUrl ? (
+        <img src={logoUrl} alt="" class="h-[5.0625rem] max-h-full w-auto max-w-[270px] object-contain object-left" />
+      ) : (
+        <span class="font-display text-xl font-bold tracking-tight text-[rgb(var(--color-accent-muted))]">Chandan Sharma</span>
+      )}
     </a>
     <button
       type="button"
@@ -25,15 +35,15 @@ const navLinks = [
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
       </svg>
     </button>
-    <ul class="nav-links hidden md:flex items-center gap-8" id="nav-links">
+    <ul class="nav-links hidden md:flex items-center gap-6" id="nav-links">
       {navLinks.map((link) => (
         <li>
           <a
             href={link.href}
-            class={`text-sm font-medium transition-colors hover:text-[rgb(var(--color-accent))] ${
+            class={`font-mono text-[0.68rem] uppercase tracking-[0.18em] transition-colors hover:text-[rgb(var(--color-accent-muted))] ${
               currentPath === link.href || (link.href !== '/' && currentPath.startsWith(link.href))
-                ? 'text-[rgb(var(--color-accent))]'
-                : 'text-[rgb(var(--color-text-muted))]'
+                ? 'text-[rgb(var(--color-accent-muted))]'
+                : 'text-[rgb(var(--color-text-subtle))]'
             }`}
           >
             {link.label}
@@ -48,9 +58,9 @@ const navLinks = [
         <li>
           <a
             href={link.href}
-            class={`text-sm font-medium ${
+            class={`font-mono text-[0.72rem] uppercase tracking-[0.18em] ${
               currentPath === link.href || (link.href !== '/' && currentPath.startsWith(link.href))
-                ? 'text-[rgb(var(--color-accent))]'
+                ? 'text-[rgb(var(--color-accent-muted))]'
                 : 'text-[rgb(var(--color-text-muted))]'
             }`}
           >

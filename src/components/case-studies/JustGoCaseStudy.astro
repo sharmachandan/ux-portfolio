@@ -1,0 +1,268 @@
+---
+import { justGoCaseStudy } from '../../data/case-studies/just-go';
+
+const { hero, sections } = justGoCaseStudy;
+---
+
+<article class="case-study-editorial">
+  <section class="case-study-hero">
+    <div class="case-study-hero__inner">
+      <div class="case-study-eyebrow">
+        <span class="case-study-eyebrow__rule"></span>
+        <span set:html={hero.eyebrow}></span>
+      </div>
+      <h1 class="case-study-hero__title" set:html={hero.titleHtml}></h1>
+      <p class="case-study-hero__deck">{hero.deck}</p>
+      <div class="case-study-hero__stats">
+        {hero.stats.map((stat) => (
+          <div class="case-study-hero__stat">
+            <div class="case-study-hero__stat-value">{stat.value}</div>
+            <div class="case-study-hero__stat-label" set:html={stat.labelHtml}></div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <div class="case-study-hero__image-strip">
+      <img src={hero.image} alt={justGoCaseStudy.title} width="1200" height="540" />
+    </div>
+  </section>
+
+  <div class="case-study-main">
+    <section class="case-study-section">
+      <div class="case-study-section__tag">{sections.origin.tag}</div>
+      <h2 class="case-study-section__title" set:html={sections.origin.titleHtml}></h2>
+      {sections.origin.paragraphs.map((paragraph) => (
+        <p class="case-study-body" set:html={paragraph}></p>
+      ))}
+
+      <div class="case-study-stat-grid">
+        {sections.origin.stats.map((stat) => (
+          <div class:list={['case-study-stat-card', stat.dark && 'is-dark']}>
+            <div class:list={['case-study-stat-card__value', stat.gold && 'is-gold']}>{stat.value}</div>
+            <div class="case-study-stat-card__label">{stat.label}</div>
+            <div class="case-study-stat-card__description">{stat.description}</div>
+          </div>
+        ))}
+      </div>
+
+      <div class="case-study-image-frame case-study-image-frame--inset">
+        <img
+          class="case-study-image"
+          src={sections.origin.image}
+          alt="Just Go member journey and exit experience"
+          width="1200"
+          height="675"
+        />
+      </div>
+    </section>
+
+    <div class="case-study-divider"></div>
+
+    <section class="case-study-section">
+      <div class="case-study-section__tag">{sections.gauntlet.tag}</div>
+      <h2 class="case-study-section__title" set:html={sections.gauntlet.titleHtml}></h2>
+      {sections.gauntlet.paragraphs.map((paragraph) => (
+        <p class="case-study-body">{paragraph}</p>
+      ))}
+      <figure class="case-study-quote">
+        <blockquote>{sections.gauntlet.quote.body}</blockquote>
+        <figcaption>{sections.gauntlet.quote.cite}</figcaption>
+      </figure>
+    </section>
+
+    <div class="case-study-divider"></div>
+
+    <section class="case-study-section">
+      <div class="case-study-section__tag">{sections.sprint.tag}</div>
+      <h2 class="case-study-section__title" set:html={sections.sprint.titleHtml}></h2>
+      {sections.sprint.paragraphs.map((paragraph) => (
+        <p class="case-study-body">{paragraph}</p>
+      ))}
+
+      <img
+        class="case-study-image"
+        src={sections.sprint.image}
+        alt="Cross-functional Just Go design sprint artifacts"
+        width="1200"
+        height="675"
+      />
+
+      <div class="case-study-timeline">
+        {sections.sprint.timeline.map((item) => (
+          <div class="case-study-timeline__item">
+            <div class="case-study-timeline__dot"></div>
+            <div class="case-study-timeline__phase">{item.phase}</div>
+            <h3 class="case-study-timeline__title">{item.title}</h3>
+            <p class="case-study-timeline__body">{item.body}</p>
+          </div>
+        ))}
+      </div>
+
+      <img
+        class="case-study-image"
+        src={sections.sprint.timelineImage}
+        alt="Just Go rollout timeline and physical prototype"
+        width="1200"
+        height="675"
+      />
+    </section>
+
+    <div class="case-study-divider"></div>
+
+    <section class="case-study-section">
+      <div class="case-study-section__tag">{sections.systemDesign.tag}</div>
+      <h2 class="case-study-section__title" set:html={sections.systemDesign.titleHtml}></h2>
+      {sections.systemDesign.paragraphs.map((paragraph) => (
+        <p class="case-study-body">{paragraph}</p>
+      ))}
+
+      <div class="case-study-stat-grid case-study-stat-grid--three">
+        {sections.systemDesign.layers.map((layer) => (
+          <div class="case-study-stat-card is-dark">
+            <div class="case-study-stat-card__value is-gold case-study-stat-card__value--layer">{layer.value}</div>
+            <div class="case-study-stat-card__label">{layer.label}</div>
+            <div class="case-study-stat-card__description">{layer.description}</div>
+          </div>
+        ))}
+      </div>
+
+      <div class="case-study-image-frame">
+        <img
+          class="case-study-image"
+          src={sections.systemDesign.image}
+          alt="Digital, physical, and associate layers of the Just Go system"
+          width="1200"
+          height="675"
+        />
+      </div>
+    </section>
+
+    <div class="case-study-divider"></div>
+
+    <section class="case-study-section">
+      <div class="case-study-section__tag">{sections.decision.tag}</div>
+      <h2 class="case-study-section__title" set:html={sections.decision.titleHtml}></h2>
+      <p class="case-study-body">{sections.decision.intro}</p>
+
+      <div class="case-study-decision">
+        <h3 class="case-study-decision__title">{sections.decision.decisionTitle}</h3>
+        <p class="case-study-decision__body" set:html={sections.decision.decisionBodyHtml}></p>
+      </div>
+    </section>
+
+    <div class="case-study-divider"></div>
+
+    <section class="case-study-section">
+      <div class="case-study-section__tag">{sections.associateExperience.tag}</div>
+      <h2 class="case-study-section__title" set:html={sections.associateExperience.titleHtml}></h2>
+      {sections.associateExperience.paragraphs.map((paragraph) => (
+        <p class="case-study-body">{paragraph}</p>
+      ))}
+
+      <div class="case-study-before-after">
+        <div class="case-study-before-after__column">
+          <div class="case-study-before-after__header">{sections.associateExperience.before.tag}</div>
+          <h3 class="case-study-before-after__title">{sections.associateExperience.before.title}</h3>
+          <p class="case-study-before-after__body">{sections.associateExperience.before.body}</p>
+        </div>
+        <div class="case-study-before-after__column is-dark">
+          <div class="case-study-before-after__header">{sections.associateExperience.after.tag}</div>
+          <h3 class="case-study-before-after__title">{sections.associateExperience.after.title}</h3>
+          <p class="case-study-before-after__body">{sections.associateExperience.after.body}</p>
+        </div>
+      </div>
+
+      <div class="case-study-image-frame case-study-image-frame--inset">
+        <img
+          class="case-study-image"
+          src={sections.associateExperience.image}
+          alt="Associate experience and Just Go tooling in store"
+          width="1200"
+          height="675"
+        />
+      </div>
+
+      <figure class="case-study-quote">
+        <blockquote>{sections.associateExperience.quote.body}</blockquote>
+        <figcaption>{sections.associateExperience.quote.cite}</figcaption>
+      </figure>
+    </section>
+
+    <div class="case-study-divider"></div>
+
+    <section class="case-study-section">
+      <div class="case-study-section__tag">{sections.transformation.tag}</div>
+      <h2 class="case-study-section__title" set:html={sections.transformation.titleHtml}></h2>
+
+      <div class="case-study-metrics-compare">
+        <div class="case-study-metrics-compare__column">
+          <div class="case-study-metrics-compare__header">Before Just Go</div>
+          {sections.transformation.beforeAfter.before.map((item) => (
+            <div class="case-study-metrics-compare__row">
+              <div class="case-study-metrics-compare__value">{item.value}</div>
+              <div class="case-study-metrics-compare__meta">{item.meta}</div>
+            </div>
+          ))}
+        </div>
+        <div class="case-study-metrics-compare__arrow" aria-hidden="true">→</div>
+        <div class="case-study-metrics-compare__column is-dark">
+          <div class="case-study-metrics-compare__header">After Just Go</div>
+          {sections.transformation.beforeAfter.after.map((item) => (
+            <div class="case-study-metrics-compare__row">
+              <div class="case-study-metrics-compare__value">{item.value}</div>
+              <div class="case-study-metrics-compare__meta">{item.meta}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <section class="case-study-impact-banner">
+    {sections.transformation.impactMetrics.map((metric) => (
+      <div class="case-study-impact-banner__item">
+        <div class="case-study-impact-banner__value">{metric.value}</div>
+        <div class="case-study-impact-banner__label" set:html={metric.labelHtml}></div>
+      </div>
+    ))}
+  </section>
+
+  <div class="case-study-main">
+    <section class="case-study-section">
+      <div class="case-study-section__tag">{sections.recognition.tag}</div>
+      <h2 class="case-study-section__title" set:html={sections.recognition.titleHtml}></h2>
+
+      <div class="case-study-recognition-grid">
+        {sections.recognition.items.map((item) => (
+          <div class="case-study-recognition-card">
+            <div class="case-study-recognition-card__icon">{item.icon}</div>
+            <div class="case-study-recognition-card__source">{item.source}</div>
+            <div class="case-study-recognition-card__text">{item.text}</div>
+          </div>
+        ))}
+      </div>
+
+      <figure class="case-study-quote">
+        <blockquote>{sections.recognition.quote.body}</blockquote>
+        <figcaption>{sections.recognition.quote.cite}</figcaption>
+      </figure>
+    </section>
+
+    <div class="case-study-divider"></div>
+
+    <section class="case-study-section">
+      <div class="case-study-section__tag">{sections.takeaways.tag}</div>
+      <h2 class="case-study-section__title" set:html={sections.takeaways.titleHtml}></h2>
+      <div class="case-study-takeaways-grid">
+        {sections.takeaways.items.map((item) => (
+          <div class="case-study-takeaway">
+            <div class="case-study-takeaway__number">{item.number}</div>
+            <h3 class="case-study-takeaway__title">{item.title}</h3>
+            <p class="case-study-takeaway__body">{item.body}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+  </div>
+</article>

@@ -10,8 +10,10 @@ const caseStudiesCollection = defineCollection({
     teamSize: z.string().optional(),
     impactCategories: z.array(z.enum(['Strategy', 'Team Enablement', 'Execution'])).optional(),
     featured: z.boolean().default(false),
+    sortOrder: z.number().optional(),
     image: z.string().optional(),
     problem: z.string().optional(),
+    template: z.string().optional(),
   }),
 });
 

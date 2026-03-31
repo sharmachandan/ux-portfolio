@@ -6,6 +6,8 @@ role: "Player + Coach, 4 designers"
 teamSize: "4 designers, 1 UXR"
 impactCategories: ["Execution", "Strategy"]
 featured: false
+sortOrder: 4
+image: "/images/case-studies/customer-discovery-placeholder.svg"
 problem: "Helping customers discover products across a massive catalog."
 ---
 
