@@ -34,6 +34,30 @@ Open [http://localhost:4321](http://localhost:4321) to view the site.
 npm run build
 ```
 
+## Deploy (Cloudflare Pages)
+
+This repo is set up for [Cloudflare Pages](https://developers.cloudflare.com/pages/) with a static Astro build (`dist/`).
+
+**Git integration (recommended):** In the Cloudflare dashboard, create a Pages project from this repository and set:
+
+- **Build command:** `npm run build`
+- **Build output directory:** `dist`
+- **Node version:** `20` (this repo includes `.nvmrc`)
+
+Add any public env vars your build needs (for example `PUBLIC_SANITY_PROJECT_ID` and `PUBLIC_SANITY_DATASET` if you use Sanity).
+
+**CLI:** After [`wrangler login`](https://developers.cloudflare.com/workers/wrangler/install-and-update/), deploy with:
+
+```bash
+npm run pages:deploy
+```
+
+Configuration lives in `wrangler.toml` (`pages_build_output_dir` points at `./dist`). To preview the built site locally with Pages routing:
+
+```bash
+npm run build && npm run pages:dev
+```
+
 ## Project Structure
 
 ```
