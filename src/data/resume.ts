@@ -1,20 +1,20 @@
 /**
- * Resume copy sourced from Chandan_Sharma_Resume_03252026.pdf (plain-text extraction).
+ * Resume copy sourced from Chandan_Sharma_Resume_03312026.pdf (plain-text extraction).
  * Layout/styling on the page follows case study 2 (Just Go) patterns in global.css.
  */
 export const resumePage = {
   pdfHref: '/resume/Chandan_Sharma_Resume.pdf',
-  pdfDownloadName: 'Chandan_Sharma_Resume_03252026.pdf',
+  pdfDownloadName: 'Chandan_Sharma_Resume_03312026.pdf',
   hero: {
     eyebrow: 'Resume · March 2026',
     titleHtml: 'Chandan <em>Sharma.</em>',
     deck:
-      'Group Director, UX Design · Experience Strategy & Platform Thinking · AI-Native Design',
+      'Group Director, UX Design · Experience Strategy with Business Thinking · AI-Native Design',
     contactLine:
       'chandan.fnu@gmail.com · 650-302-2500 · linkedin.com/in/chandans · chandansharma.com · SF Bay Area, CA',
     image: '/images/hero-pov.jpg',
     stats: [
-      { value: '16+', labelHtml: 'Years<br />in UX leadership' },
+      { value: '15+', labelHtml: 'Years<br />in UX leadership' },
       { value: '600+', labelHtml: 'Clubs &amp;<br />omnichannel scale' },
       { value: '26', labelHtml: 'Designers<br />across 20 products' },
       { value: '4', labelHtml: 'International<br />design awards' },
@@ -24,7 +24,7 @@ export const resumePage = {
     tag: 'Profile',
     titleHtml: 'Design executive at the intersection of <em>scale, systems,</em> and measurable impact.',
     paragraphs: [
-      "Design executive with 16+ years building human-centered experiences at the intersection of scale, systems thinking, and measurable business impact. At Sam's Club, I lead UX across 20+ products and 600+ club locations — directing 26 designers partnered with 50+ PMs and 400+ engineers to deliver omnichannel experiences that set new benchmarks for member trust and associate productivity.",
+      "Design executive with 15+ years of building human-centered experiences at the intersection of transformational business impact, technology enabled frontier, and scale of Fortune 1 retail. At Sam's Club, I lead UX across 20+ products and 600+ club locations — directing 26 designers partnered with 50+ PMs and 400+ engineers to deliver omni-channel experiences that set new benchmarks for member trust and associate productivity.",
       'Active AI design practitioner; recipient of four international design awards in 2024–25. Comfortable operating at executive altitude while staying connected to craft.',
     ],
   },
@@ -130,29 +130,44 @@ export const resumePage = {
     tag: 'Awards & Recognition',
     titleHtml: 'International recognition for <em>product and craft.</em>',
     items: [
-      { icon: 'iF', source: 'iF Design Award', text: 'Own Your Inventory (OYI) · ifdesign.com' },
+      {
+        icon: 'iF',
+        source: 'iF Design Award (2026)',
+        text: 'Best Service Design — Own Your Inventory mobile app integrated with AI & Robotics',
+      },
+      {
+        icon: 'iF',
+        source: 'iF Design Award (2025)',
+        text: "Best Service Design — Sam’s Club Exit Experience",
+      },
       {
         icon: 'WB',
-        source: 'Webby Awards',
-        text: "Best User Experience (AI Apps & Experiences) — Sam's Club Exit Experience",
+        source: 'Webby Awards (2025)',
+        text: "People’s Voice Winner — Best User Experience (AI, Immersive & Games) for Sam’s Club Exit Experience; Honoree — AI, Immersive & Games (Products & Services)",
       },
       {
         icon: 'FC',
-        source: 'Fast Company',
-        text: "Innovation by Design — UX Design category · Sam's Club",
+        source: 'Fast Company (2025)',
+        text: 'Innovation by Design finalist — best UX Design for Sam’s Club Exit Experience',
       },
-      { icon: 'WM', source: 'Walmart', text: "President's Innovation Award — first-ever recipient" },
-      { icon: 'iF', source: 'iF Design Award', text: "Sam's Club Exit Experience" },
-      { icon: 'OY', source: "Sam's Club", text: 'Technology Innovator of the Year — for OYI' },
-      { icon: 'XT', source: "Sam's Club", text: 'Most Innovative & Best Overall XTeam — In-Club Design Team' },
+      {
+        icon: 'WM',
+        source: 'Walmart (2025)',
+        text: "President's Innovation Award — first-ever recipient",
+      },
+      {
+        icon: 'TI',
+        source: "Sam's Club (2019)",
+        text: 'Technology Innovator of the Year — reimagining inventory management for associates and returns experience for members',
+      },
     ],
   },
   patents: {
     tag: 'Patents',
     titleHtml: 'Invention at the edge of <em>physical and digital.</em>',
     items: [
-      'US 12045866 B2 — Presenting Tire-Related Information to Customers',
-      'USD1034627 S1 — GUI for Touchless Health Screening Kiosk',
+      'US12045866B2 — System and method for presenting tire-related information to customers',
+      'USD1034627S1 — Display screen with graphical user interface: GUI for Touchless Health Screening Kiosk',
     ],
   },
   education: {
