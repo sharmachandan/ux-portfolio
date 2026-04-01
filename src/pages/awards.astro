@@ -27,7 +27,7 @@ const sortedAwards = [...awardsList].sort((a: { year: number }, b: { year: numbe
     </header>
 
     <div class="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-      {sortedAwards.map((award: { name: string; year: number; category: string; project: string; org: string; link?: string }) => (
+      {sortedAwards.map((award: { name: string; year: number; category: string; project: string; org: string; link?: string; imageSrc?: string }) => (
         <AwardCard
           name={award.name}
           year={award.year}
@@ -35,6 +35,7 @@ const sortedAwards = [...awardsList].sort((a: { year: number }, b: { year: numbe
           project={award.project}
           org={award.org}
           link={award.link}
+          imageSrc={award.imageSrc}
         />
       ))}
     </div>
