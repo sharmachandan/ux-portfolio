@@ -174,8 +174,7 @@ const relatedStudies = allSlugs.filter((s) => s.slug !== slug).slice(0, 2);
 
       <script>
         const CASE_STUDY_PASSWORD = 'AI4Experience';
-        const slug = {JSON.stringify(slug)};
-        const unlockedKey = `case-study-unlocked:${String(slug)}`;
+        const unlockedKey = `case-study-unlocked:${window.location.pathname}`;
 
         const gateEl = document.querySelector('[data-case-study-gate]');
         const contentEl = document.querySelector('[data-case-study-content]');
@@ -193,7 +192,7 @@ const relatedStudies = allSlugs.filter((s) => s.slug !== slug).slice(0, 2);
           if (contentEl) contentEl.style.display = 'none';
         }
 
-        document.addEventListener('DOMContentLoaded', () => {
+        const init = () => {
           try {
             if (localStorage.getItem(unlockedKey) === '1') {
               unlock();
@@ -208,7 +207,7 @@ const relatedStudies = allSlugs.filter((s) => s.slug !== slug).slice(0, 2);
 
           formEl.addEventListener('submit', (e) => {
             e.preventDefault();
-            const value = inputEl.value || '';
+            const value = (inputEl.value || '').trim();
             const ok = value === CASE_STUDY_PASSWORD;
             if (ok) {
               try {
@@ -222,7 +221,13 @@ const relatedStudies = allSlugs.filter((s) => s.slug !== slug).slice(0, 2);
               if (errorEl) errorEl.classList.remove('hidden');
             }
           });
-        });
+        };
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', init);
+        } else {
+          init();
+        }
       </script>
     </div>
   ) : template === 'just-go' ? (
